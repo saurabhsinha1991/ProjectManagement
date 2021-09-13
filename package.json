@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/saurabhsinha1991/ProjectManagement#readme",
   "dependencies": {
+    "ag-grid-community": "^26.0.0",
+    "ag-grid-react": "^26.0.0",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.6",
     "express": "^4.17.1",
