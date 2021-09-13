@@ -5,7 +5,6 @@ const app = express();
 
 connectDB();
 
-
 // Init Middleware
 app.use(express.json({ extended: false }));
 
@@ -15,7 +14,7 @@ app.get('/api', (req, res) => {
 
 // Define Routes
 app.use('/api/auth', require('./routes/api/auth'));
-app.use('/api/users', require('./routes/api/users'));
+app.use('/api/register', require('./routes/api/register'));
 
 const PORT = process.env.PORT || 5000;
 

@@ -14,15 +14,6 @@ const ERROR_MESSAGES = Object.freeze({
     ALREADY_REGISTERED: 'Email Already Registered'
 });
 
-router.get('/', auth, async (req, res) => {
-    try {
-        const user = await User.findById(req.user.id).select('-password');
-        res.status(200).json(user);
-    } catch(err) {
-        return res.status(500).send('Internal Server Error');
-    }
-});
-
 // @route      POST api/users
 // @desc       Register user
 // @access     PUBLIC
@@ -60,16 +51,36 @@ router.post('/', [
             }
         };
 
+
         jwt.sign(payload, config.get('jwtSecret'), { expiresIn: 360000 }, (err, token) => {
             if (err) {
                 throw err;
             }
-            res.json({ token })
-        });
+            return res
+                .cookie("X-Auth-Token", token, {
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === "production",
+                })
+                .status(200)
+                .json({ token });
+
+        })
     } catch(err) {
         console.log('Error', err);
         return res.status(500).send('Server Error')
     }
+});
+
+router.get('/user', auth, async (req, res) => {
+    try {
+
+        const user = await User.findById(req.user.id).select('-password');
+        return res.status(200).json(user);
+
+    } catch(err) {
+        return res.status(401).json({ msg: 'unauthorized' });
+    }
+    return res.status(500);
 });
 
 module.exports = router;
