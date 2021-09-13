@@ -17,7 +17,7 @@ function getCookie(cname, cookie) {
 module.exports = function(req, res, next) {
     const cookie = req.headers.cookie;
 
-    const token = getCookie('X-Auth-Token', cookie);
+    const token = cookie ? getCookie('X-Auth-Token', cookie) : null;
     if (!token) {
         return res.status(401).json({ msg: 'Unauthorized' });
     }

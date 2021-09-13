@@ -5,7 +5,7 @@ import { UserContext } from '../hooks/UserContext';
 
 const PrivateRoute = ({component: Component, ...rest}) => {
     const { user } = useContext(UserContext);
-    debugger;
+    
     return (
         <Route {...rest} render={props => (
             user ?

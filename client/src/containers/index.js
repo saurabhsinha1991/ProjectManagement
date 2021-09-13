@@ -11,10 +11,10 @@ import Home from "./Home";
 import Login from "./Login";
 
 function Main() {
-    const { user, loading, setUser } = useFindUser();
-    debugger;
+    const { user, loading, setUser, findUser } = useFindUser();
+
     return (
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{ user, setUser, findUser }}>
             <Router>
                 {!loading && (
                     <Switch>

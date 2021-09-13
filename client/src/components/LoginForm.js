@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
+import { UserContext } from '../hooks/UserContext';
 
 function LoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [token, loginFn] = useAuth();
+    const { findUser } = useContext(UserContext);
     const history = useHistory();
 
     const onSubmit = async () => {
         await loginFn({ email, password });
+        await findUser();
         history.push('/');
     };
 
