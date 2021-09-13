@@ -11,15 +11,17 @@ import Home from "./Home";
 import Login from "./Login";
 
 function Main() {
-    const { user, setUser } = useFindUser();
+    const { user, loading, setUser } = useFindUser();
     debugger;
     return (
         <UserContext.Provider value={{ user, setUser }}>
             <Router>
-                <Switch>
-                    <Route component={Login} path="/login" />
-                    <PrivateRoute component={Home} path="/" />
-                </Switch>
+                {!loading && (
+                    <Switch>
+                        <Route component={Login} path="/login" />
+                        <PrivateRoute component={Home} path="/" />
+                    </Switch>
+                )}
             </Router>
         </UserContext.Provider>
     )

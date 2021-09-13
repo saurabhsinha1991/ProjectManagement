@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { UserContext } from '../../hooks/UserContext';
 
 function Home() {
+    const { user } = useContext(UserContext);
     return (
-        <h1>Home</h1>
+        <h1>Logged in as {user.name}</h1>
     )
 }
 

@@ -3,6 +3,7 @@ import { getData } from '../utils/api';
 
 export default function useFindUser() {
    const [user, setUser] = useState(null);
+   const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function findUser() {
@@ -12,6 +13,7 @@ export default function useFindUser() {
             } catch(err) {
                 console.log('Error', err);
             }
+            setLoading(false);
         }
         findUser();
     }, []);
@@ -19,5 +21,6 @@ export default function useFindUser() {
     return {
         user,
         setUser,
+        loading,
    }
 }
