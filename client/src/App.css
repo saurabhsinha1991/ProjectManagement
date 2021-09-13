@@ -1,0 +1,15 @@
+.mb-20 {
+    margin-bottom: 20px;
+}
+.project-table thead {
+    background-color: darkgray;
+    color: #ffffff;
+}
+.table-sub-header {
+    background-color: gray;
+    font-size: 12px;
+    color: #ffffff;
+}
+.table-sub-header td {
+    color: #ffffff;
+}
