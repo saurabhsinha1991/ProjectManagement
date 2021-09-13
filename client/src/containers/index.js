@@ -4,6 +4,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import Header from "../components/Header";
 import PrivateRoute from "../components/PrivateRoute";
 import useFindUser from "../hooks/useFindUser";
 import { UserContext } from "../hooks/UserContext";
@@ -15,6 +16,9 @@ function Main() {
 
     return (
         <UserContext.Provider value={{ user, setUser, findUser }}>
+            {user && (
+                <Header />
+            )}
             <Router>
                 {!loading && (
                     <Switch>
