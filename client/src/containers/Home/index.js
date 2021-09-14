@@ -3,6 +3,7 @@ import { Button, Card, Container } from 'react-bootstrap';
 import useProject from '../../hooks/useProject';
 import moment from 'moment';
 import AddProject from '../../components/AddProject';
+import { Link } from 'react-router-dom';
 
 function Home() {
     const { projects, fetchProjects, deleteProject } = useProject();
@@ -23,8 +24,8 @@ function Home() {
     return (
         <Container>
             <div className="d-flex flex-wrap mt-20">
-                {projects.map((project) => (
-                    <div className="pd-20">
+                {projects.map((project, i) => (
+                    <div className="pd-20" key={i}>
                         <Card style={{ width: '18rem', marginBottom: 20 }}>
                             <Card.Header>
                                 <Button variant="secondary" onClick={() => handleDelete(project._id)}>Delete Project</Button>
@@ -40,7 +41,7 @@ function Home() {
                                 <Card.Text>
                                     End Date: {`${moment(project.endDate).format('DD MMM YYYY')}`}
                                 </Card.Text>
-                                <Button variant="primary">Go somewhere</Button>
+                                <Link to={`/project/${project._id}`} variant="primary">Get Details</Link>
                             </Card.Body>
                         </Card>
                     </div>
