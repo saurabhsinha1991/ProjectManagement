@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getData, postData } from "../utils/api";
 
 function useProject() {
@@ -18,15 +18,16 @@ function useProject() {
         setProjects(response);
     }
 
-    useEffect(() => {
-        fetchProjects();
-    }, []);
+    const getSingleProject = async (id) => {
+        return await getData(`/api/projects/${id}`);
+    }
 
     return {
         projects,
         fetchProjects,
         addProject,
         deleteProject,
+        getSingleProject,
     }
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Card, Container } from 'react-bootstrap';
 import useProject from '../../hooks/useProject';
 import moment from 'moment';
@@ -8,6 +8,10 @@ import { Link } from 'react-router-dom';
 function Home() {
     const { projects, fetchProjects, deleteProject } = useProject();
     const [show, setShow] = useState(false);
+
+    useEffect(() => {
+        fetchProjects();
+    }, []);
 
     const handleClose = (fetchNew = false) => {
         setShow(false);
@@ -41,6 +45,14 @@ function Home() {
                                 <Card.Text>
                                     End Date: {`${moment(project.endDate).format('DD MMM YYYY')}`}
                                 </Card.Text>
+                                <Card.Text>
+                                    Columns displayed:
+                                </Card.Text>
+                                    <ul>
+                                        {project.columns.map((item, k) => (
+                                            <li key={k}>{item}</li>
+                                        ))}
+                                    </ul>
                                 <Link to={`/project/${project._id}`} variant="primary">Get Details</Link>
                             </Card.Body>
                         </Card>
@@ -60,7 +72,7 @@ function Home() {
                 </div>
             </div>
 
-            <AddProject show={show} handleClose={handleClose} />
+            {show && (<AddProject show={show} handleClose={handleClose} />)}
         </Container>
     )
 }

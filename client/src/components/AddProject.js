@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Modal, Form } from 'react-bootstrap';
+import { Button, Modal, Form, InputGroup } from 'react-bootstrap';
 import useProject from '../hooks/useProject';
 
 function AddProject(props) {
@@ -8,6 +8,9 @@ function AddProject(props) {
     const [managerName, setManagerName] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [currentColumnText, setColumnText] = useState('');
+    const [columns, setColumns] = useState([]);
+
     const { addProject } = useProject();
 
     const addProjectData = async () => {
@@ -15,12 +18,23 @@ function AddProject(props) {
             projectName,
             managerName,
             startDate,
-            endDate
+            endDate,
+            columns,
         });
         if (!response.error) {
             handleClose(true);
         }
     }
+
+    const addColumn = () => {
+        setColumns([ ...columns, currentColumnText ]);
+        setColumnText('');
+    };
+
+    const removeColumn = (e, index) => {
+        e.preventDefault();
+        setColumns(columns.filter((_, i) => i !== index));
+    };
 
     return (
         <Modal show={show} onHide={handleClose}>
@@ -66,6 +80,22 @@ function AddProject(props) {
                             onChange={(e) => setEndDate(e.target.value)}
                         />
                     </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <InputGroup className="mb-2">
+                            <Form.Control
+                                value={currentColumnText}
+                                type="text"
+                                placeholder="Enter Column Name"
+                                onChange={(e) => setColumnText(e.target.value)}
+                            />
+                            <InputGroup.Text onClick={addColumn}>+</InputGroup.Text>
+                        </InputGroup>
+                    </Form.Group>
+                    <ul>
+                        {columns.map((item, i) => (
+                            <li>{item} <a href="/" onClick={(e) => removeColumn(e, i)}>Remove</a></li>
+                        ))}
+                    </ul>
                 </Form>
             </Modal.Body>
             <Modal.Footer>

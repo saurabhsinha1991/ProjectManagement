@@ -20,7 +20,12 @@ const ProjectSchema = moongoose.Schema({
     endDate: {
         type: Date,
         required: true,
-    }
+    },
+    columns: [
+        {
+            type: String
+        }
+    ]
 });
 
 module.exports = Project = moongoose.model('project', ProjectSchema);
