@@ -7,7 +7,7 @@ function Header() {
     return (
         <Navbar bg="light" expand="lg">
             <Container>
-                <Navbar.Brand href="#home">Project Timelines</Navbar.Brand>
+                <Navbar.Brand href="/">Project Timelines</Navbar.Brand>
                 Hello {user.name}!
             </Container>
         </Navbar>

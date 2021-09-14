@@ -43,7 +43,7 @@ router.post('/add', [auth, [
     const { projectName, managerName, startDate, endDate } = req.body;
 
     try {
-        let project = await Project.findOne({ projectName });
+        let project = await Project.findOne({ projectName, user: req.user.id });
 
         if (project) {
             return res.status(400).json({ error: [{ msg: ERROR_MSG.ALREADY_REGISTERED }]});
