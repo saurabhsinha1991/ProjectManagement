@@ -5,7 +5,7 @@ import {
   Route,
 } from "react-router-dom";
 import Header from "../components/Header";
-import PrivateRoute from "../components/PrivateRoute";
+import PrivateRoute from "./PrivateRoute";
 import useFindUser from "../hooks/useFindUser";
 import { UserContext } from "../hooks/UserContext";
 import Home from "./Home";
