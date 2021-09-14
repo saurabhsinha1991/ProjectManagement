@@ -5,7 +5,7 @@ import moment from 'moment';
 import AddProject from '../../components/AddProject';
 
 function Home() {
-    const { projects, fetchProjects } = useProject();
+    const { projects, fetchProjects, deleteProject } = useProject();
     const [show, setShow] = useState(false);
 
     const handleClose = (fetchNew = false) => {
@@ -16,12 +16,19 @@ function Home() {
     }
     const handleShow = () => setShow(true);
 
+    const handleDelete = async (id) => {
+        await deleteProject(id);
+    }
+
     return (
         <Container>
             <div className="d-flex flex-wrap mt-20">
                 {projects.map((project) => (
                     <div className="pd-20">
                         <Card style={{ width: '18rem', marginBottom: 20 }}>
+                            <Card.Header>
+                                <Button variant="secondary" onClick={() => handleDelete(project._id)}>Delete Project</Button>
+                            </Card.Header>
                             <Card.Body>
                                 <Card.Title>{project.projectName}</Card.Title>
                                 <Card.Text>

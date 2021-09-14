@@ -67,4 +67,21 @@ router.post('/add', [auth, [
     }
 });
 
+router.post('/delete', [auth, [
+    check('id', 'Id not present').not().isEmpty(),
+]], async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ error: errors.array() });
+    }
+
+    const { id } = req.body;
+
+    await Project.remove({ _id: id });
+
+    const projects = await Project.find({ user: req.user.id });
+    return res.status(200).json(projects);
+});
+
 module.exports = router;

@@ -13,6 +13,11 @@ function useProject() {
         return await postData('/api/projects/add', details);
     }
 
+    const deleteProject = async (id) => {
+        const response = await postData('/api/projects/delete', { id });
+        setProjects(response);
+    }
+
     useEffect(() => {
         fetchProjects();
     }, []);
@@ -21,6 +26,7 @@ function useProject() {
         projects,
         fetchProjects,
         addProject,
+        deleteProject,
     }
 }
 
