@@ -66,8 +66,7 @@ router.post('/', [
             res.json({ token })
         });
     } catch(err) {
-        console.log()
-        return res.status(500).send('Server Error')
+        return res.status(500).send('Server Error');
     }
 });
 

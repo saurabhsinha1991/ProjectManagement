@@ -1,0 +1,70 @@
+const express = require('express');
+const router = express.Router();
+const { check, validationResult } = require('express-validator');
+const auth = require('../../middleware/auth');
+const Project = require('../../models/Project');
+const User = require('../../models/User');
+
+const ERROR_MSG = Object.assign({
+    PROJECT_NAME: 'Project Name is required',
+    MANAGER_NAME: 'Manager Name is required',
+    START_DATE: 'Start Date is required',
+    END_DATE: 'End Date is required', 
+    ALREADY_REGISTERED: 'Project already exists'
+});
+
+// @route    GET api/project
+// @desc     Get User projects
+// @access   Private
+router.get('/', auth, async (req, res) => {
+    try {        
+        const projects = await Project.find({ user: req.user.id });
+        return res.status(200).json(projects);
+    } catch(err) {
+        return res.status(500).send('Server Error');
+    }
+});
+
+// @route    POST api/project
+// @desc     Add project
+// @access   Private
+router.post('/add', [auth, [
+    check('projectName', ERROR_MSG.PROJECT_NAME).not().isEmpty(),
+    check('managerName', ERROR_MSG.MANAGER_NAME).not().isEmpty(),
+    check('startDate', ERROR_MSG.START_DATE).not().isEmpty(),
+    check('endDate', ERROR_MSG.END_DATE).not().isEmpty()
+]], async (req, res) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ error: errors.array() });
+    }
+
+    const { projectName, managerName, startDate, endDate } = req.body;
+
+    try {
+        let project = await Project.findOne({ projectName });
+
+        if (project) {
+            return res.status(400).json({ error: [{ msg: ERROR_MSG.ALREADY_REGISTERED }]});
+        }
+
+        // const user = await User.findById(req.user.id).select('-password');
+
+        project = new Project({
+            user: req.user.id,
+            projectName,
+            managerName,
+            startDate,
+            endDate,
+        });
+        
+        const newProject = await project.save();
+
+        return res.status(200).json(newProject);
+    } catch(err) {
+        return res.status(500).send('Server Error');
+    }
+});
+
+module.exports = router;
