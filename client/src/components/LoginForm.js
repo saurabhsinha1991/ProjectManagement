@@ -13,15 +13,20 @@ function LoginForm() {
   const [loginFn] = useAuth();
   const { findUser } = useContext(UserContext);
   const history = useHistory();
-  const { showForm, showRegisterForm } = useRegister();
-
+  const {
+    showForm,
+    showRegisterForm,
+    setShowForm,
+    postRegisterDetails,
+  } = useRegister();
   const onSubmit = async () => {
     await loginFn({ email, password });
     await findUser();
     history.push("/");
   };
 
-  if (showForm) return <RegisterForm />;
+  if (showForm)
+    return <RegisterForm {...{ showForm, setShowForm, postRegisterDetails }} />;
 
   return (
     <div className="login-form-wrapper">
