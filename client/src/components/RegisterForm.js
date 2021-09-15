@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Form, Modal } from "react-bootstrap";
 import { Button } from "react-bootstrap";
-import { useRegister } from "../hooks/useRegister";
+// import { useRegister } from "../hooks/useRegister";
 
 function RegisterForm(props) {
   const { postRegisterDetails, setShowForm, showForm } = props;
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const registerUser = () => postRegisterDetails(userName, email, password);
+  const registerUser = () => {
+    postRegisterDetails(userName, email, password)
+  };
   const handleClose = () => setShowForm(false);
   console.log('Hi');
 
@@ -48,6 +50,7 @@ function RegisterForm(props) {
           </Form.Group>
         </Form>
       </Modal.Body>
+  <Modal.Title>{props?.regError}</Modal.Title>
       <Modal.Footer>
         <Button variant="primary" onClick={registerUser}>
           Register

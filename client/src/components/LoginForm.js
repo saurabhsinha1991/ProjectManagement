@@ -18,6 +18,8 @@ function LoginForm() {
     showRegisterForm,
     setShowForm,
     postRegisterDetails,
+    regError,
+    setRegError
   } = useRegister();
   const onSubmit = async () => {
     await loginFn({ email, password });
@@ -26,7 +28,7 @@ function LoginForm() {
   };
 
   if (showForm)
-    return <RegisterForm {...{ showForm, setShowForm, postRegisterDetails }} />;
+    return (<RegisterForm {...{ showForm, setShowForm, postRegisterDetails ,regError,setRegError }} />);
 
   return (
     <div className="login-form-wrapper">
