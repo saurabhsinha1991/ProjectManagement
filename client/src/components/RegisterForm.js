@@ -10,6 +10,7 @@ function RegisterForm(props) {
   const [password, setPassword] = useState("");
   const registerUser = () => postRegisterDetails(userName, email, password);
   const handleClose = () => setShowForm(false);
+  console.log('Hi');
 
   return (
     <Modal show={showForm} onHide={handleClose}>
