@@ -10,6 +10,7 @@ function Project() {
     const [column, setColumn] = useState([]);
     const { getSingleProject } = useProject();
     const [rowData, setRowData] = useState([]);
+    const [gridApi, setGridApi] = useState(null);
 
     useEffect(() => {
        const fetchData = async () => {
@@ -33,11 +34,39 @@ function Project() {
         setRowData([...rowData, defaultRow]);
     };
 
+    const onGridReady = (params) => {
+        setGridApi(params.api)
+    }
+
+    const save = () => {
+        const output = [];
+        gridApi.forEachNode(function(node) { 
+            const { data } = node;
+            const rowNodes = []
+            Object.entries(data).forEach(item => {
+                const [key, value] = item;
+                rowNodes.push({
+                    key,
+                    value,
+                })
+            });
+            output.push({
+                projectId: id,
+                rowNodes,
+            })
+        });
+    }
+
     return (
         <Container className="mt-20">
             <Button className="mb-20" onClick={addRow}>Add Row</Button>
+            {/* <Button className="mb-20" onClick={save}>Save</Button> */}
             <div className="ag-theme-alpine" style={{ height: 500, width: '100%'}}>
-                <AgGridReact rowData={rowData}>
+                <AgGridReact
+                    rowData={rowData}
+                    rowSelection={"multiple"}
+                    onGridReady={onGridReady}
+                >
                     <AgGridColumn headerName="PHASE TITLE" editable field="title"></AgGridColumn>
                     <AgGridColumn headerName="START DATE" editable field="startDate"></AgGridColumn>
                     <AgGridColumn headerName="END DATE" editable field="endDate"></AgGridColumn>
