@@ -10,7 +10,7 @@ import RegisterForm from "./RegisterForm";
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loginFn] = useAuth();
+  const { loginFn } = useAuth();
   const { findUser } = useContext(UserContext);
   const history = useHistory();
   const {

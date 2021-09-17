@@ -12,7 +12,10 @@ function useAuth() {
         }
     }
 
-    return [token, loginFn];
+    return {
+        token,
+        loginFn
+    };
 }
 
 export default useAuth;

@@ -31,7 +31,6 @@ router.get('/', auth, async (req, res) => {
 // @access   Private
 router.get('/:id', auth, async (req, res) => {
     try {
-        console.log('id>>', req.params.id);
         const project = await Project.findById(req.params.id);
         return res.status(200).json(project);
     } catch(err) {
